@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Accueil from './pages/Accueil';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Coupdecoeur from './pages/Coupdecoeur';
 
 function App() {
+  const [genres, setGenres] = useState([])
+  const [moviesData, setMoviesData] = useState([])
+
+  useEffect(() => {
+      axios
+          .get("https://api.themoviedb.org/3/genre/movie/list?api_key=d248ea3e1b2fdbc11aca176180e43de5&language=fr-FR")
+          .then((res)=> {
+              setGenres(res.data.genres)
+          })
+  },[])
+
+  useEffect(() => {
+      axios
+          .get("https://api.themoviedb.org/3/search/movie?api_key=d248ea3e1b2fdbc11aca176180e43de5&query=a&language=fr-FR")
+          .then((res)=> {
+            setMoviesData(res.data.results)
+          })
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Accueil genres={genres} moviesData={moviesData}/>} />
+        <Route path="/favoris" element={<Coupdecoeur genres={genres} />} />
+        <Route path="*" element={<Accueil genres={genres} moviesData={moviesData}/>} />
+      </Routes>
+  </BrowserRouter>
   );
 }
 

@@ -1,0 +1,37 @@
+.active-link {
+    text-decoration: none;
+
+    li {
+        background-color: #546FE4;
+        padding: 7px 20px;
+        border-radius: 10px;
+    }
+
+    color: white
+}
+
+.navigation {
+    position: relative;
+    width: 100%;
+
+    ul {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        li {
+            list-style: none;
+            padding: 7px 20px;
+            border-radius: 10px;
+        }
+
+    }
+
+    h1 {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+}
